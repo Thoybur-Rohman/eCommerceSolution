@@ -16,6 +16,6 @@ namespace eCommerceApp.Domain.Interfaces
 
         Task<int> UpdateAsync(TEntity entity);
 
-        Task<int> DeleteAsync(TEntity entity);
+        Task<int> DeleteAsync(Guid id);
     }
 }

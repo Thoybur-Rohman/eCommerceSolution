@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eCommerceApp.Application.DTOs.Category
 {
-    internal class CreateCategory : CategoryBase
+    public class CreateCategory : CategoryBase
     {
     }
 }

@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using eCommerceApp.Application.DTOs;
 using eCommerceApp.Application.DTOs.Category;
-using eCommerceApp.Application.DTOs.Product;
 using eCommerceApp.Application.Service.Interfaces;
 using eCommerceApp.Domain.Entities;
 using eCommerceApp.Domain.Interfaces;
 
 namespace eCommerceApp.Application.Service.Implementations
 {
-    internal class CategoryService(IGeneric<Category> categoryInterface , IMapper mapper) : ICategoryService
+    internal class CategoryService(IGeneric<Category> categoryInterface, IMapper mapper) : ICategoryService
     {
         public async Task<ServiceResponce> AddAsync(CreateCategory category)
         {

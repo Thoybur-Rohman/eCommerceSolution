@@ -7,7 +7,6 @@ namespace eCommerceApp.Application.DTOs.Product
     {
         [Required]
         public Guid Id { get; set; }
-        [Required]
         public GetCategory? Category { get; set; }
     }
 }

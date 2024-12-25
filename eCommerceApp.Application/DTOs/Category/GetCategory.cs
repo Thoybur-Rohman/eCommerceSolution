@@ -7,7 +7,6 @@ namespace eCommerceApp.Application.DTOs.Category
     {
         [Required]
         public Guid Id { get; set; }
-        [Required]
         public ICollection<GetProduct>? Products { get; set; }
     }
 }

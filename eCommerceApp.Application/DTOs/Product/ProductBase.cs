@@ -9,6 +9,7 @@ namespace eCommerceApp.Application.DTOs.Product
         [Required]
         public string? Description { get; set; }
         [Required]
+        [DataType(DataType.Currency)]   
         public decimal? Price { get; set; }
         [Required]
         public string? Image { get; set; }

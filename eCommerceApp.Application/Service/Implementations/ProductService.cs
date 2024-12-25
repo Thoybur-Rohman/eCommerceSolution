@@ -1,4 +1,5 @@
-﻿using eCommerceApp.Application.DTOs;
+﻿using AutoMapper;
+using eCommerceApp.Application.DTOs;
 using eCommerceApp.Application.DTOs.Product;
 using eCommerceApp.Application.Service.Interfaces;
 using eCommerceApp.Domain.Entities;
@@ -6,31 +7,57 @@ using eCommerceApp.Domain.Interfaces;
 
 namespace eCommerceApp.Application.Service.Implementations
 {
-    public class ProductService(IGeneric<Product> productInterface) : IProductService
+    public class ProductService(IGeneric<Product> productInterface , IMapper mapper) : IProductService
     {
         public async Task<ServiceResponce> AddAsync(CreateProduct product)
         {
-           int result = await productInterface.AddAsync(product);
+           var mappedData = mapper.Map<Product>(product);
+           int result = await productInterface.AddAsync(mappedData);
+
+            if (result > 0)
+            {
+                return new ServiceResponce(true, $"Product with id added ");
+            }
+            return new ServiceResponce(false, "Id not added");
         }
 
-        public Task<ServiceResponce> DeleteAsync(Guid id)
+        public async Task<ServiceResponce> DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            int result = await productInterface.DeleteAsync(id);
+
+            if (result > 0)
+            {
+                return new ServiceResponce(true, $"Product deleted with id : {id}");
+            }
+            return new ServiceResponce(false ,"Id not found");
+        }
+             
+        public async Task<IEnumerable<GetProduct>> GetAllAsync()
+        {
+            var rawData = await productInterface.GetAllAsync();
+            if (rawData != null) return [];
+
+            return mapper.Map<IEnumerable<GetProduct>>(rawData);
         }
 
-        public Task<IEnumerable<GetProduct>> GetAllAsync()
+        public async Task<GetProduct> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var rawData = await productInterface.GetByIdAsync(id);
+            if (rawData != null) return null;
+
+            return mapper.Map<GetProduct>(rawData);
         }
 
-        public Task<GetProduct> GetByIdAsync(Guid id)
+        public async Task<ServiceResponce> UpdateAsync(UpdateProduct product)
         {
-            throw new NotImplementedException();
-        }
+            var mappedData = mapper.Map<Product>(product);
+            int result = await productInterface.UpdateAsync(mappedData);
 
-        public Task<ServiceResponce> UpdateAsync(UpdateProduct product)
-        {
-            throw new NotImplementedException();
+            if (result > 0)
+            {
+                return new ServiceResponce(true, $"Product updated ");
+            }
+            return new ServiceResponce(false, "Id not updated");
         }
     }
 }

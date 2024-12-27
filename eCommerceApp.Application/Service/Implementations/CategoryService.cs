@@ -35,7 +35,7 @@ namespace eCommerceApp.Application.Service.Implementations
         public async Task<IEnumerable<GetCategory>> GetAllAsync()
         {
             var rawData = await categoryInterface.GetAllAsync();
-            if (rawData != null) return [];
+            if (!rawData.Any()) return [];
 
             return mapper.Map<IEnumerable<GetCategory>>(rawData);
         }
@@ -43,7 +43,7 @@ namespace eCommerceApp.Application.Service.Implementations
         public async Task<GetCategory> GetByIdAsync(Guid id)
         {
             var rawData = await categoryInterface.GetByIdAsync(id);
-            if (rawData != null) return null;
+            if (rawData == null) return new GetCategory();
 
             return mapper.Map<GetCategory>(rawData);
         }

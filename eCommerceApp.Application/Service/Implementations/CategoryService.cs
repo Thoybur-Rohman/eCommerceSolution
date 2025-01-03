@@ -7,7 +7,7 @@ using eCommerceApp.Domain.Interfaces;
 
 namespace eCommerceApp.Application.Service.Implementations
 {
-    internal class CategoryService(IGeneric<Category> categoryInterface, IMapper mapper) : ICategoryService
+    public class CategoryService(IGeneric<Category> categoryInterface, IMapper mapper) : ICategoryService
     {
         public async Task<ServiceResponce> AddAsync(CreateCategory category)
         {

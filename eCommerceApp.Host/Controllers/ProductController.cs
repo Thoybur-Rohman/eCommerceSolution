@@ -26,12 +26,14 @@ namespace eCommerceApp.Host.Controllers
         [HttpPost("add")]
         public async Task<IActionResult> Add([FromBody] CreateProduct createProduct)
         {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
             var result = await productService.AddAsync(createProduct);
             return result.Success ? StatusCode(201, result) : BadRequest(result);
         }
-        [HttpPost("update")]
-        public async Task<IActionResult> Add(UpdateProduct updateProduct)
+        [HttpPut("update")]
+        public async Task<IActionResult> Update(UpdateProduct updateProduct)
         {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
             var result = await productService.UpdateAsync(updateProduct);
             return result.Success ? Ok(result) : BadRequest(result);
         }

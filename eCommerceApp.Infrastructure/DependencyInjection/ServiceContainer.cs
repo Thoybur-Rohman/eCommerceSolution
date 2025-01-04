@@ -30,10 +30,9 @@ namespace eCommerceApp.Infrastructure.DependencyInjection
             return services;
         }
 
-        public static IApplicationBuilder UserInfrastructureService(this IApplicationBuilder app)
+        public static IApplicationBuilder UseExceptionHandlingMiddleware(this IApplicationBuilder app)
         {
-            app.UseMiddleware<ExceptionHanlingMiddleware>();
-            return app;
+            return app.UseMiddleware<ExceptionHandlingMiddleware>();
         }
 
     }

@@ -9,9 +9,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace eCommerceApp.Infrastructure.Middleware
 {
-    public class ExceptionHanlingMiddleware(RequestDelegate _next)
+    public class ExceptionHandlingMiddleware(RequestDelegate _next)
     {
-        public async Task TaskAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext context)
         {
             try
             {
@@ -19,6 +19,7 @@ namespace eCommerceApp.Infrastructure.Middleware
             }
             catch (DbUpdateException ex)
             {
+                context.Response.ContentType = "application.json";
                 if (ex.InnerException is SqlException innerException)
                 {
                     switch (innerException.Number)
@@ -31,6 +32,16 @@ namespace eCommerceApp.Infrastructure.Middleware
                             context.Response.StatusCode = StatusCodes.Status400BadRequest;
                             await context.Response.WriteAsync(innerException.Message);
                             break;
+                        case 547:
+                            context.Response.StatusCode = StatusCodes.Status409Conflict;
+                            await context.Response.WriteAsync(innerException.Message);
+                            break;
+
+                        default:
+                            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                            await context.Response.WriteAsync(context.Response.StatusCode.ToString());
+                            break;
+
                     }
                 }
                 else
@@ -47,4 +58,4 @@ namespace eCommerceApp.Infrastructure.Middleware
         }
         }
     }
-}
+

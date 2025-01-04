@@ -1,6 +1,7 @@
 
 using eCommerceApp.Infrastructure.DependencyInjection;
 using eCommerceApp.Application.DependencyInjection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -25,7 +26,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UserInfrastructureService();
+app.UseExceptionHandlingMiddleware();
 
 app.UseAuthorization();
 

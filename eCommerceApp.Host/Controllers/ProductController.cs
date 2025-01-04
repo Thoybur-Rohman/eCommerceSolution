@@ -38,7 +38,7 @@ namespace eCommerceApp.Host.Controllers
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
-        [HttpPost("delete/{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await productService.DeleteAsync(id);

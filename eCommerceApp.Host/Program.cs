@@ -13,6 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructureService(builder.Configuration);
 builder.Services.AddApplicationService();
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -23,6 +24,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UserInfrastructureService();
 
 app.UseAuthorization();
 

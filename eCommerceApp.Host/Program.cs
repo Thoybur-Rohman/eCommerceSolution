@@ -19,15 +19,26 @@ builder.Services.AddApplicationService();
 Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
     .WriteTo.Console()
-    .WriteTo.File("log/log.tct", rollingInterval: RollingInterval.Day)
+    .WriteTo.File("log/log.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 builder.Host.UseSerilog();
 Log.Logger.Information("Application is building...");
+
+builder.Services.AddCors(
+    builder => builder.AddDefaultPolicy(options =>
+    {
+        options.AllowAnyHeader()
+        .AllowAnyMethod()
+        .WithOrigins("https://localhost:7026")
+        .AllowCredentials();
+    }));
 
 try
 {
 
     var app = builder.Build();
+    app.UseCors();
+
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
